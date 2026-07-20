@@ -9,11 +9,40 @@
 MVP 范围：**器乐、PC 键鼠、本地化、单人**。（人声 / 硬件 / 移动端 / 协作 / 云端本期不做）
 
 ## 文档
+
 - [产品文档](docs/01-product.md) — 范围、用户、场景、成功标准
 - [技术方案](docs/02-technical.md) — 架构、Schema、操作层、Agent、栈选型
+- [Schema 规格](docs/schema.md) — 版本化工程文档与校验规则
+- [操作契约](docs/operations.md) — 原语 API、批处理、校验与撤销语义
+- [AI 接入契约](docs/ai-contract.md) — OpenAI/Gemini 服务商选择、隐私与失败处理
+- [电脑键盘输入](docs/keyboard-input.md) — QWERT 音阶映射、试听与录制契约
+- [教程系统](docs/tutorial-system.md) — 强制新手引导与页面上下文教程契约
+- [输出与生命周期](docs/output-and-lifecycle.md) — 工程创建、时间线、恢复、AI 草稿及 WAV/MIDI 导出
+- [乐器注册表](docs/instrument-registry.md) — 版本化音源资产、MIDI 映射与渲染能力
+- [M0 定义](docs/m0-definition.md) — 首个可运行纵向切片及验收流程
 - [全周期工作项](docs/03-worklog.md) — M0→M5 里程碑清单
 - [Hackathon 介绍](docs/04-pitch.md) — 灵感、挑战、成就
 
 ## 一句话架构
-文档（JSON，真相） + 操作层（原语 + 语义宏） + Agent（Claude tool calling）。
-自己造的只有这三样，其余全部复用（Tone.js / soundfont / 后期符号模型）。
+
+文档（JSON，真相） + 操作层（原语 + 语义宏） + macOS 原生 AI 运行时（OpenAI/Gemini Provider Adapter）。
+React 界面包含在 Tauri 应用内；AI 配置、Keychain 保存、服务商请求与候选校验都在一个 macOS 应用中完成。
+
+## 开发环境（当前处于 M-1）
+
+前置条件：Node.js **25.8.0**（`.node-version` 固定；支持范围 `>=24.14.0 <26`）、pnpm **11.9.0**、Rust **1.94.0**，以及 Tauri 所要求的 macOS 桌面构建环境。前端固定为 React **19.2.7**、Vite **7.3.6**、TypeScript **5.9.3**、Tauri **2.11.4**、Tone.js **15.1.22**（精确解析版本见 `pnpm-lock.yaml` 与 `src-tauri/Cargo.lock`）。实录乐器的试听与 WAV 导出只使用通过校验的随包 WAV 采样；`合成主音` 是唯一明确标注的电子合成乐器。任何本应使用实录、却没有通过校验的乐器都会在界面中禁用，绝不静默回退为电子音。详见[第三方声明](THIRD_PARTY_NOTICES.md)。
+
+```sh
+pnpm install
+pnpm dev             # 仅开发时为 WebView 提供静态资源
+pnpm test            # 教程与领域单元测试
+pnpm lint            # ESLint 静态检查
+pnpm format:check    # Prettier 格式检查
+pnpm typecheck       # TypeScript 严格检查
+pnpm build           # 前端生产构建
+pnpm check           # format + lint + typecheck + test + build 质量门
+pnpm tauri dev       # 启动一站式 macOS 桌面开发应用
+pnpm tauri build --debug
+```
+
+验证桌面 AI 时，在 macOS 应用内打开 **AI Chat**，选择 OpenAI 或 Gemini，并把个人 API Key 保存到 macOS 钥匙串。不要启动历史 `gateway/` 服务或设置 `VITE_GATEWAY_URL`；原生应用会直接请求所选服务商。详见 [AI 接入契约](docs/ai-contract.md)。

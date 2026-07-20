@@ -1,0 +1,37 @@
+{
+  "schemaVersion": "1.0",
+  "id": "00000000-0000-4000-8000-000000000001",
+  "name": "Broken clip reference",
+  "createdAt": "2026-07-18T00:00:00.000Z",
+  "updatedAt": "2026-07-18T00:00:00.000Z",
+  "meta": {
+    "tempo": 120,
+    "key": "C",
+    "mode": "minor",
+    "timeSig": [4, 4],
+    "instrumentRegistryVersion": "1.0"
+  },
+  "sections": [
+    { "id": "00000000-0000-4000-8000-000000000010", "name": "Demo", "bars": 1 }
+  ],
+  "tracks": [
+    {
+      "id": "00000000-0000-4000-8000-000000000020",
+      "name": "Lead",
+      "role": "lead",
+      "instrument": "square_lead",
+      "vol": 0.7,
+      "mute": false,
+      "solo": false
+    }
+  ],
+  "clips": [
+    {
+      "id": "00000000-0000-4000-8000-000000000030",
+      "trackId": "00000000-0000-4000-8000-000000000099",
+      "sectionId": "00000000-0000-4000-8000-000000000010",
+      "notes": []
+    }
+  ],
+  "automation": []
+}

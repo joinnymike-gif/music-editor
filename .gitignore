@@ -1,0 +1,11 @@
+node_modules/
+dist/
+gateway/dist/
+.pnpm-store/
+*.tsbuildinfo
+.DS_Store
+gateway/.env.local
+.env.local
+recordings/
+deliverables/
+src-tauri/target/
