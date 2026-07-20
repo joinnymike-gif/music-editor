@@ -74,4 +74,18 @@ pnpm tauri dev       # start the one-stop macOS development app
 pnpm tauri build --debug
 ```
 
+### One-click macOS launch
+
+For the local development application, double-click [AI Music IDE Launcher.app](<scripts/AI Music IDE Launcher.app>) in Finder. It opens a native macOS launch window; click **Launch AI Music IDE** to start the complete desktop project. The launcher opens Terminal, checks the required Node.js and Rust toolchains, installs the lockfile-pinned JavaScript dependencies on the first run, and opens the one-stop Tauri desktop app. Keep that Terminal window open while using the development build; press <kbd>Control</kbd>+<kbd>C</kbd> there to stop it.
+
+The launcher's source is [AI Music IDE Launcher.applescript](<scripts/AI Music IDE Launcher.applescript>). [start-mac.command](scripts/start-mac.command) remains the direct terminal fallback.
+
+If macOS blocks the file because it was downloaded from the internet, Control-click it in Finder and choose **Open** once. The equivalent terminal command is:
+
+```sh
+./scripts/start-mac.command
+```
+
+For a non-launching environment check, run `./scripts/start-mac.command --dry-run`.
+
 For desktop AI validation, open **AI Chat** inside the macOS application, choose OpenAI or Gemini, and save a personal API key to macOS Keychain. Do not start the legacy `gateway/` service or set `VITE_GATEWAY_URL`; the native app talks to the selected provider directly. See the [AI Connection Contract](docs/ai-contract.md).

@@ -74,4 +74,18 @@ pnpm tauri dev       # 启动一站式 macOS 桌面开发应用
 pnpm tauri build --debug
 ```
 
+### macOS 一键启动
+
+在 Finder 中双击 [AI Music IDE Launcher.app](<scripts/AI Music IDE Launcher.app>)，会先出现原生 macOS 启动窗口；点击 **Launch AI Music IDE** 即可启动完整桌面项目。启动器会打开 Terminal、检查 Node.js 与 Rust 环境、仅在首次运行时安装 lockfile 固定的 JavaScript 依赖，然后打开一站式 Tauri 桌面应用。使用开发版期间请保持该 Terminal 窗口打开；在其中按 <kbd>Control</kbd>+<kbd>C</kbd> 可以停止应用。
+
+启动器源码见 [AI Music IDE Launcher.applescript](<scripts/AI Music IDE Launcher.applescript>)；[start-mac.command](scripts/start-mac.command) 仍可作为直接在终端启动的备用入口。
+
+如果 macOS 因“来自互联网”而阻止打开，请在 Finder 中按住 Control 点击该文件，并选择一次 **打开**。等价的终端命令为：
+
+```sh
+./scripts/start-mac.command
+```
+
+如只想检查环境而不启动应用，可运行 `./scripts/start-mac.command --dry-run`。
+
 验证桌面 AI 时，在 macOS 应用内打开 **AI Chat**，选择 OpenAI 或 Gemini，并把个人 API Key 保存到 macOS 钥匙串。不要启动历史 `gateway/` 服务或设置 `VITE_GATEWAY_URL`；原生应用会直接请求所选服务商。详见 [AI 接入契约](docs/ai-contract.md)。
